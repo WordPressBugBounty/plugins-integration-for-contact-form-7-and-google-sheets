@@ -3,8 +3,8 @@ Contributors: crmperks, sbazzi, asif876
 Tags: wordpress Google Sheets, contact form 7 Google Sheets, WPForms google sheet integration, Google Sheets, ninja forms google sheets
 Requires at least: 4.7
 Tested up to: 6.8
-Stable tag: 1.1.0
-Version: 1.1.0
+Stable tag: 1.1.1
+Version: 1.1.1
 Requires PHP: 5.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -129,6 +129,9 @@ Our team provides free support at <a href="https://www.crmperks.com/contact-us/"
 
 == Changelog ==
 
+
+= 1.1.1 =
+* updated google developer app settings.
 
 = 1.1.0 =
 * fixed "xss issue with settings page".
