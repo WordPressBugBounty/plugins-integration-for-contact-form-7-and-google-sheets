@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Integration for Contact Forms and Google Sheets
 * Description: Integrates Contact Form 7, <a href="https://wordpress.org/plugins/contact-form-entries/">Contact Form Entries Plugin</a> and many other forms with Google Sheets allowing form submissions to be automatically sent to your Google Sheets 
-* Version: 1.1.1
+* Version: 1.1.2
 * Requires at least: 4.7
 * Author URI: https://www.crmperks.com
 * Plugin URI: https://www.crmperks.com/plugins/contact-form-plugins/contact-form-googlesheets-plugin/
@@ -23,7 +23,7 @@ class vxcf_googlesheets {
   public  $crm_name = "googlesheets";
   public  $id = "vxcf_googlesheets";
   public  $domain = "vxcf-googlesheets";
-  public  $version = "1.1.1";
+  public  $version = "1.1.2";
   public  $update_id = "6000001";
   public  $min_cf_version = "1.0";
   public  $type = "vxcf_googlesheets";
@@ -928,7 +928,7 @@ return $result;
       $value=$value['value'];   
      }
      if(!is_array($value)){
-          $value=maybe_unserialize($value);
+         // $value=maybe_unserialize($value);
      }
   }else if(isset($_REQUEST[$field_id])){ 
     $value=$this->post($field_id);   
