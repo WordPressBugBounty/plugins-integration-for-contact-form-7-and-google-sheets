@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Integration for Contact Forms and Google Sheets
 * Description: Integrates Contact Form 7, <a href="https://wordpress.org/plugins/contact-form-entries/">Contact Form Entries Plugin</a> and many other forms with Google Sheets allowing form submissions to be automatically sent to your Google Sheets 
-* Version: 1.1.2
+* Version: 1.1.3
 * Requires at least: 4.7
 * Author URI: https://www.crmperks.com
 * Plugin URI: https://www.crmperks.com/plugins/contact-form-plugins/contact-form-googlesheets-plugin/
@@ -23,7 +23,7 @@ class vxcf_googlesheets {
   public  $crm_name = "googlesheets";
   public  $id = "vxcf_googlesheets";
   public  $domain = "vxcf-googlesheets";
-  public  $version = "1.1.2";
+  public  $version = "1.1.3";
   public  $update_id = "6000001";
   public  $min_cf_version = "1.0";
   public  $type = "vxcf_googlesheets";
@@ -88,18 +88,7 @@ register_activation_hook(__FILE__,(array($this,'activate')));
   add_action('init', array($this,'init'));
        //loading translations
 load_plugin_textdomain('integration-for-contact-form-7-and-spreadsheets', FALSE,  $this->plugin_dir_name(). '/languages/' );
-  
-  self::$db_version=get_option($this->type."_version");
-  if(self::$db_version != $this->version && current_user_can( 'manage_options' )){
-  $data=$this->get_data_object();
-  $data->update_table();
-  update_option($this->type."_version", $this->version);
-  //add post permissions
-  require_once(self::$path . "includes/install.php"); 
-  $install=new vxcf_googlesheets_install();
-  $install->create_roles();   
-
-  }
+$this->maybe_install(true);
 }
   
   }
@@ -121,6 +110,34 @@ include_once($pro_file);
       require_once(self::$path . "includes/crmperks-cf.php"); 
 require_once(self::$path . "includes/plugin-pages.php");  
   }
+
+
+  /**
+  * create tables and roles
+  * 
+  */
+public function maybe_install($version_check=false){
+    
+  if(current_user_can( 'manage_options' )){
+  self::$db_version=get_option($this->type."_version");
+     $do_install=false;
+      if($version_check == false){
+        $do_install=true;  
+      }else if(self::$db_version != $this->version){
+        $do_install=true;   
+      }
+  if($do_install){
+  $data=$this->get_data_object();
+  $data->update_table();
+  update_option($this->type."_version", $this->version);
+  //add post permissions
+  require_once(self::$path . "includes/install.php"); 
+  $install=new vxcf_googlesheets_install();
+  $install->create_roles();   
+  }
+  } 
+}  
+  
 public function form_submitted($form){ 
     //entries plugin exists , do not use this hook
     if(class_exists('vxcf_form')){ return; } 
@@ -496,28 +513,6 @@ self::$plugin->instance();
   echo '</p></div>';
   } 
 
-
-  /**
-  * create tables and roles
-  * 
-  */
-  public function install(){
-      
-  if(current_user_can( 'manage_options' )){
-  self::$db_version=get_option($this->type."_version");
-  if(self::$db_version != $this->version){
-  $data=$this->get_data_object();
-  $data->update_table();
-  update_option($this->type."_version", $this->version);
-  //add post permissions
-  require_once(self::$path . "includes/install.php"); 
-  $install=new vxcf_googlesheets_install();
-  $install->create_roles();   
-
-  }
-
-  } 
-  }
 /**
 * Contact Form status
 * 
@@ -1254,6 +1249,7 @@ if(!current_user_can($this->id."_send_to_crm")){return; }
   */
   public function activate(){ 
 $this->plugin_api(true);
+$this->maybe_install();
 do_action('plugin_status_'.$this->type,'activate');  
   }
     /**
