@@ -3,8 +3,8 @@ Contributors: crmperks, sbazzi, asif876
 Tags: wordpress Google Sheets, contact form 7 Google Sheets, WPForms google sheet integration, Google Sheets, ninja forms google sheets
 Requires at least: 4.7
 Tested up to: 6.9
-Stable tag: 1.1.3
-Version: 1.1.3
+Stable tag: 1.1.4
+Version: 1.1.4
 Requires PHP: 5.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -129,6 +129,9 @@ Our team provides free support at <a href="https://www.crmperks.com/contact-us/"
 
 == Changelog ==
 
+
+= 1.1.4 =
+* fixed "sanitize sql orderby" issue.
 
 = 1.1.3 =
 * fixed "mfile upload field without entries plguin" issue.
